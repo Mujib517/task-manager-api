@@ -24,6 +24,10 @@ app.listen(port, function () {
     console.log('Server is running on port 4000');
 });
 
+app.get('/', function (req, res) {
+    res.send("Task manager api");
+});
+
 app.use('/tasks', taskRouter);
 
 
