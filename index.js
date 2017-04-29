@@ -1,11 +1,20 @@
 var express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const cors = require('cors');
 
 var taskCtrl = require('./controllers/task.ctrl');
+var taskRouter = require('./routes/task.router.js');
 
 
 var app = express();
 
+var db = "admin:admin@ds125481.mlab.com:25481/taskdb";
+var localDb = "mongodb://localhost/taskDb";
+
+mongoose.connect(db);
+
+app.use(cors());  //allow access to all the origins
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 
@@ -13,11 +22,9 @@ app.listen(4000, function () {
     console.log('Server is running on port 4000');
 });
 
-//app.get('/', );
+app.use('/tasks', taskRouter);
 
-app.get('/tasks', taskCtrl.tasks);
-app.get('/tasks/:id', taskCtrl.taskById);
-app.post('/tasks', taskCtrl.add);
+
 
 
 
